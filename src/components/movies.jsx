@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/Like";
 import "font-awesome/css/font-awesome.css";
+import Pagination from "./common/Pagination";
 class Movies extends Component {
   state = {
     movies: getMovies(),
@@ -62,6 +63,7 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination />
       </React.Fragment>
     );
   }
