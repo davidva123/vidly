@@ -6,6 +6,8 @@ import Pagination from "./common/Pagination";
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    currentPage: 1,
+    pageSize: 4,
   };
   eraseMovie = (selectedMovie) => {
     const movies = this.state.movies.filter((x) => x._id !== selectedMovie._id);
@@ -16,10 +18,16 @@ class Movies extends Component {
     const movies = [...this.state.movies];
     const index = movies.indexOf(selectedMovie);
     movies[index].liked = !movies[index].liked;
-    this.setState({movies});
+    this.setState({ movies });
   };
+
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
+  };
+
   render() {
     const { length: count } = this.state.movies;
+    const { pageSize, currentPage } = this.state;
     if (count === 0) {
       return <p>There are no movies in the database.</p>;
     }
@@ -63,16 +71,15 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
-        <Pagination />
+        <Pagination
+          itemsCount={count}
+          pageSize={pageSize}
+          onPageChange={this.handlePageChange}
+          currentPage={currentPage}
+        />
       </React.Fragment>
     );
   }
-
-  // numberOfMovies() {
-  //   return this.state.movies.length > 0
-  //     ? `There are ${this.state.movies.length} movies in the queue`
-  //     : `No movies in the queue`;
-  // }
 }
 
 export default Movies;
