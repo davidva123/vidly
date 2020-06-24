@@ -3,6 +3,8 @@ import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/Like";
 import "font-awesome/css/font-awesome.css";
 import Pagination from "./common/Pagination";
+
+import { paginate } from "../utils/paginate";
 class Movies extends Component {
   state = {
     movies: getMovies(),
@@ -27,13 +29,15 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, movies:allMovies } = this.state;
     if (count === 0) {
       return <p>There are no movies in the database.</p>;
     }
+
+const movies = paginate(allMovies,currentPage,pageSize);
     return (
       <React.Fragment>
-        {/* {this.numberOfMovies()} */}
+        
         <p>There are {count} movies available.</p>
         <table className="table table-striped">
           <thead>
@@ -47,7 +51,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((selectedMovie) => (
+            {movies.map((selectedMovie) => (
               <tr key={selectedMovie._id}>
                 <td>{selectedMovie.title}</td>
                 <td>{selectedMovie.genre.name}</td>

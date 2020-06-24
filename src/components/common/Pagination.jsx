@@ -12,7 +12,6 @@ const Pagination = (props) => {
 
   return (
     <nav>
-      {/* {pagesCount} */}
       <ul className="pagination">
         {pages.map((page) => (
           <li
